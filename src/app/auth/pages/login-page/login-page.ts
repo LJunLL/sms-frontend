@@ -1,24 +1,24 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from '../../services/AuthService';
 import { Login } from '../../intefaces/auth.interfaces';
-
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
   imports: [ReactiveFormsModule],
-  templateUrl: './login-page.html'
+  templateUrl: './login-page.html',
 })
 export default class LoginPage {
-
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
+  private router = inject(Router);
 
   errorMessage = signal<string | null>(null);
 
   loginForm = this.fb.nonNullable.group({
     username: ['', Validators.required],
-    password: ['', Validators.required]
+    password: ['', Validators.required],
   });
 
   onSubmit() {
@@ -31,8 +31,8 @@ export default class LoginPage {
     const request: Login = this.loginForm.getRawValue();
 
     this.authService.login(request).subscribe({
-      next: () => console.log('Login correcto. Token:', this.authService.getToken()),
-      error: () => this.errorMessage.set('Usuario o contraseña incorrectos')
+      next: () => this.router.navigate(['/students']),
+      error: (err) => this.errorMessage.set(err.error?.message ?? 'Login failed'),
     });
   }
 }
