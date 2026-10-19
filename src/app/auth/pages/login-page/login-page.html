@@ -6,4 +6,8 @@
   @if (errorMessage()) {
     <p>{{ errorMessage() }}</p>
   }
+
+  @if (infoMessage()) {
+  <div class="alert alert-info">{{ infoMessage() }}</div>
+}
 </form>
