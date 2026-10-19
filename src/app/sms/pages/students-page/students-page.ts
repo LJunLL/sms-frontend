@@ -12,8 +12,6 @@ import { AuthService } from '../../../auth/services/auth.service';
 })
 export default class StudentsPage implements OnInit {
   private studentService = inject(StudentService);
-  private router = inject(Router)
-  private authService = inject(AuthService)
 
   students = signal<Student[]>([]);
 
@@ -26,10 +24,5 @@ export default class StudentsPage implements OnInit {
       next: (students) => this.students.set(students),
       error: (err) => console.error('Error cargando alumnos', err),
     });
-  }
-
-  logout(){
-    this.authService.logout();
-    this.router.navigate(['/login']);
   }
 }

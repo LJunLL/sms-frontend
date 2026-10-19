@@ -4,19 +4,19 @@ import { authGuard } from './auth/guards/auth-guard';
 export const routes: Routes = [
   {
     path: 'login',
-    loadComponent: () => import('./auth/pages/login-page/login-page'),
+    loadComponent: () => import('./auth/pages/login-page/login-page')
   },
   {
-    path: 'students',
-    loadComponent: () => import('./sms/pages/students-page/students-page'),
-    canActivate: [authGuard]
+    path: '',
+    loadComponent: () => import('./sms/layouts/sms-layout'),
+    canActivate: [authGuard],
+    children: [
+      {
+        path: 'students',
+        loadComponent: () => import('./sms/pages/students-page/students-page')
+      },
+      { path: '', redirectTo: 'students', pathMatch: 'full' }
+    ]
   },
-
-
-  {
-    path: '**',
-    redirectTo: 'login',
-  }
-
-
+  { path: '**', redirectTo: '' }
 ];
