@@ -8,7 +8,7 @@ export const routes: Routes = [
   },
   {
     path: '',
-    loadComponent: () => import('./sms/layouts/sms-layout'),
+    loadComponent: () => import('./sms/layouts/sms-layout/sms-layout'),
     canActivate: [authGuard],
     children: [
       {
