@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../../auth/services/auth.service';
 
@@ -9,7 +9,7 @@ import { AuthService } from '../../../auth/services/auth.service';
 })
 export class Navbar {
   private router = inject(Router)
-  private authService = inject(AuthService)
+  public authService = inject(AuthService)
 
   logout(){
     this.authService.logout();

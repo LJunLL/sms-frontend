@@ -12,6 +12,7 @@ import { AuthService } from '../../../auth/services/auth.service';
 })
 export default class StudentsPage implements OnInit {
   private studentService = inject(StudentService);
+  public authService = inject(AuthService);
 
   students = signal<Student[]>([]);
 
