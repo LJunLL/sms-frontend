@@ -10,4 +10,8 @@ export class StudentService {
   getStudents() {
     return this.http.get<Student[]>(`${environment.apiUrl}/students`);
   }
+
+  deleteStudent(id: number){
+    return this.http.delete<void>(`${environment.apiUrl}/students/${id}`);
+  }
 }

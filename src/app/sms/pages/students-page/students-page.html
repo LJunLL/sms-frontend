@@ -1,8 +1,13 @@
 <div class="p-6">
-  <h1 class="text-2xl font-bold mb-4">Students</h1>
+  <div class="flex justify-between items-center mb-4">
+    <h1 class="text-2xl font-bold">Students</h1>
   @if (authService.isAdmin()) {
     <button class="btn btn-primary btn-sm">Add student</button>
   }
+  </div>
+  @if (errorMessage()) {
+  <div class="alert alert-error mb-4">{{ errorMessage() }}</div>
+}
   <div class="overflow-x-auto">
     <table class="table table-zebra">
       <thead>
@@ -15,10 +20,13 @@
           <th>Phone</th>
           <th>Birthday</th>
           <th>Enrollment Date</th>
+          @if(authService.isAdmin()){
+            <th>Actions</th>
+          }
         </tr>
       </thead>
       <tbody>
-        @for (student of students(); track students) {
+        @for (student of students(); track student.id) {
           <tr>
             <td>{{ student.id }}</td>
             <td>{{ student.dni }}</td>
@@ -28,6 +36,14 @@
             <td>{{ student.phone }}</td>
             <td>{{ student.birthday | date: 'dd/MM/yyyy' }}</td>
             <td>{{ student.enrollmentDate }}</td>
+            @if(authService.isAdmin()){
+              <td>
+                <button class="btn btn-error btn-sm btn-outline"
+                (click)="deleteStudents(student)">
+                Delete
+              </button>
+              </td>
+            }
           </tr>
         }
       </tbody>
