@@ -3,10 +3,11 @@ import { StudentService } from '../../services/student.service';
 import { Student } from '../../interfaces/student.interface';
 import { DatePipe } from '@angular/common';
 import { AuthService } from '../../../auth/services/auth.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-students-page',
-  imports: [DatePipe],
+  imports: [DatePipe, RouterLink],
   templateUrl: './students-page.html',
 })
 export default class StudentsPage implements OnInit {

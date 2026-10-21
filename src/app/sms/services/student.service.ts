@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Student } from '../interfaces/student.interface';
+import { Student, StudentRequest } from '../interfaces/student.interface';
 import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
@@ -13,5 +13,9 @@ export class StudentService {
 
   deleteStudent(id: number){
     return this.http.delete<void>(`${environment.apiUrl}/students/${id}`);
+  }
+
+  createStudent(request: StudentRequest){
+    return this.http.post<Student>(`${environment.apiUrl}/students`, request)
   }
 }

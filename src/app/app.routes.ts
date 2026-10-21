@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './auth/guards/auth-guard';
 import { guestGuard } from './auth/guards/guest-guard';
+import { adminGuard } from './auth/guards/admin-guard';
 
 export const routes: Routes = [
   {
@@ -16,6 +17,11 @@ export const routes: Routes = [
       {
         path: 'students',
         loadComponent: () => import('./sms/pages/students-page/students-page')
+      },
+      {
+        path: 'students/new',
+        loadComponent: () => import('./sms/pages/student-form-page/student-form-page'),
+        canActivate: [adminGuard]
       },
       { path: '', redirectTo: 'students', pathMatch: 'full' }
     ]
