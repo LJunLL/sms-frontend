@@ -30,7 +30,7 @@ export default class StudentsPage implements OnInit {
     });
   }
 
-  deleteStudents(student: Student){
+  deleteStudent(student: Student){
     if(!confirm(`Delete ${student.name} ${student.lastName}?`)){
       return
     }

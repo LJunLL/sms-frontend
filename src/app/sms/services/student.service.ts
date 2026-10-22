@@ -16,6 +16,14 @@ export class StudentService {
   }
 
   createStudent(request: StudentRequest){
-    return this.http.post<Student>(`${environment.apiUrl}/students`, request)
+    return this.http.post<Student>(`${environment.apiUrl}/students`, request);
+  }
+
+  getStudentById(id: number){
+    return this.http.get<Student>(`${environment.apiUrl}/students/${id}`);
+  }
+
+  updateStudent(id: number, request: StudentRequest){
+    return this.http.put<Student>(`${environment.apiUrl}/students/${id}`, request);
   }
 }

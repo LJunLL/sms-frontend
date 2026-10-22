@@ -1,13 +1,13 @@
 <div class="p-6">
   <div class="flex justify-between items-center mb-4">
     <h1 class="text-2xl font-bold">Students</h1>
-  @if (authService.isAdmin()) {
-    <a routerLink="/students/new" class="btn btn-primary btn-sm">Add student</a>
-  }
+    @if (authService.isAdmin()) {
+      <a routerLink="/students/new" class="btn btn-primary btn-sm">Add student</a>
+    }
   </div>
   @if (errorMessage()) {
-  <div class="alert alert-error mb-4">{{ errorMessage() }}</div>
-}
+    <div class="alert alert-error mb-4">{{ errorMessage() }}</div>
+  }
   <div class="overflow-x-auto">
     <table class="table table-zebra">
       <thead>
@@ -20,7 +20,7 @@
           <th>Phone</th>
           <th>Birthday</th>
           <th>Enrollment Date</th>
-          @if(authService.isAdmin()){
+          @if (authService.isAdmin()) {
             <th>Actions</th>
           }
         </tr>
@@ -35,13 +35,20 @@
             <td>{{ student.email }}</td>
             <td>{{ student.phone }}</td>
             <td>{{ student.birthday | date: 'dd/MM/yyyy' }}</td>
-            <td>{{ student.enrollmentDate }}</td>
-            @if(authService.isAdmin()){
+            <td>{{ student.enrollmentDate | date: 'dd/MM/yyyy' }}</td>
+            @if (authService.isAdmin()) {
               <td>
-                <button class="btn btn-error btn-sm btn-outline"
-                (click)="deleteStudents(student)">
-                Delete
-              </button>
+                <div class="flex gap-2">
+                  <a
+                    [routerLink]="['/students', student.id, 'edit']"
+                    class="btn btn-sm btn-outline"
+                  >
+                    Edit
+                  </a>
+                  <button class="btn btn-error btn-sm btn-outline" (click)="deleteStudent(student)">
+                    Delete
+                  </button>
+                </div>
               </td>
             }
           </tr>

@@ -23,6 +23,11 @@ export const routes: Routes = [
         loadComponent: () => import('./sms/pages/student-form-page/student-form-page'),
         canActivate: [adminGuard]
       },
+      {
+        path: 'students/:id/edit',
+        loadComponent: () => import('./sms/pages/student-form-page/student-form-page'),
+        canActivate: [adminGuard]
+      },
       { path: '', redirectTo: 'students', pathMatch: 'full' }
     ]
   },

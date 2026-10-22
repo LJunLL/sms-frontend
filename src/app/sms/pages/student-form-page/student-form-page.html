@@ -1,6 +1,5 @@
 <div class="max-w-3xl">
-  <h1 class="text-2xl font-bold mb-4">New student</h1>
-
+  <h1 class="text-2xl font-bold mb-4">{{ isEditMode ? 'Edit student' : 'New student' }}</h1>
   @if (errorMessage()) {
     <div class="alert alert-error mb-4">{{ errorMessage() }}</div>
   }
@@ -8,7 +7,6 @@
   <form [formGroup]="studentForm" (ngSubmit)="onSubmit()" class="card bg-base-100 shadow-sm">
     <div class="card-body">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6">
-
         <fieldset class="fieldset">
           <label class="label" for="dni">DNI</label>
           <input id="dni" type="text" class="input w-full" formControlName="dni" />
@@ -20,7 +18,9 @@
         <fieldset class="fieldset">
           <label class="label" for="email">Email</label>
           <input id="email" type="email" class="input w-full" formControlName="email" />
-          @if (studentForm.controls.email.touched && studentForm.controls.email.errors?.['required']) {
+          @if (
+            studentForm.controls.email.touched && studentForm.controls.email.errors?.['required']
+          ) {
             <p class="text-error text-sm">Email is required</p>
           }
           @if (studentForm.controls.email.touched && studentForm.controls.email.errors?.['email']) {
@@ -31,7 +31,9 @@
         <fieldset class="fieldset">
           <label class="label" for="name">Name</label>
           <input id="name" type="text" class="input w-full" formControlName="name" />
-          @if (studentForm.controls.name.touched && studentForm.controls.name.errors?.['required']) {
+          @if (
+            studentForm.controls.name.touched && studentForm.controls.name.errors?.['required']
+          ) {
             <p class="text-error text-sm">Name is required</p>
           }
         </fieldset>
@@ -39,7 +41,10 @@
         <fieldset class="fieldset">
           <label class="label" for="lastName">Last name</label>
           <input id="lastName" type="text" class="input w-full" formControlName="lastName" />
-          @if (studentForm.controls.lastName.touched && studentForm.controls.lastName.errors?.['required']) {
+          @if (
+            studentForm.controls.lastName.touched &&
+            studentForm.controls.lastName.errors?.['required']
+          ) {
             <p class="text-error text-sm">Last name is required</p>
           }
         </fieldset>
@@ -47,7 +52,9 @@
         <fieldset class="fieldset">
           <label class="label" for="phone">Phone</label>
           <input id="phone" type="tel" class="input w-full" formControlName="phone" />
-          @if (studentForm.controls.phone.touched && studentForm.controls.phone.errors?.['required']) {
+          @if (
+            studentForm.controls.phone.touched && studentForm.controls.phone.errors?.['required']
+          ) {
             <p class="text-error text-sm">Phone is required</p>
           }
         </fieldset>
@@ -55,19 +62,29 @@
         <fieldset class="fieldset">
           <label class="label" for="birthday">Birthday</label>
           <input id="birthday" type="date" class="input w-full" formControlName="birthday" />
-          @if (studentForm.controls.birthday.touched && studentForm.controls.birthday.errors?.['required']) {
+          @if (
+            studentForm.controls.birthday.touched &&
+            studentForm.controls.birthday.errors?.['required']
+          ) {
             <p class="text-error text-sm">Birthday is required</p>
           }
         </fieldset>
 
         <fieldset class="fieldset">
           <label class="label" for="enrollmentDate">Enrollment date</label>
-          <input id="enrollmentDate" type="date" class="input w-full" formControlName="enrollmentDate" />
-          @if (studentForm.controls.enrollmentDate.touched && studentForm.controls.enrollmentDate.errors?.['required']) {
+          <input
+            id="enrollmentDate"
+            type="date"
+            class="input w-full"
+            formControlName="enrollmentDate"
+          />
+          @if (
+            studentForm.controls.enrollmentDate.touched &&
+            studentForm.controls.enrollmentDate.errors?.['required']
+          ) {
             <p class="text-error text-sm">Enrollment date is required</p>
           }
         </fieldset>
-
       </div>
 
       <div class="card-actions justify-end mt-4">
