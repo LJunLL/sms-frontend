@@ -1,5 +1,15 @@
-<!-- sms-layout.html -->
-<app-navbar />
-<main class="p-6">
-  <router-outlet />
-</main>
+<div class="drawer lg:drawer-open">
+  <input id="sidebar" type="checkbox" class="drawer-toggle" />
+
+  <div class="drawer-content flex flex-col min-h-screen">
+    <app-navbar />
+    <main class="flex-1 p-6">
+      <router-outlet />
+    </main>
+  </div>
+
+  <div class="drawer-side">
+    <label for="sidebar" aria-label="Close menu" class="drawer-overlay"></label>
+    <app-sidebar />
+  </div>
+</div>

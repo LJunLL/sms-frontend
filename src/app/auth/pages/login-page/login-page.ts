@@ -13,15 +13,16 @@ export default class LoginPage {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
-  private route = inject(ActivatedRoute)
+  private route = inject(ActivatedRoute);
 
   errorMessage = signal<string | null>(null);
+  isLoading = signal(false);
 
   infoMessage = signal<string | null>(
-  this.route.snapshot.queryParamMap.get('reason') === 'expired'
-    ? 'Your session has expired or is no longer valid. Please log in again.'
-    : null
-);
+    this.route.snapshot.queryParamMap.get('reason') === 'expired'
+      ? 'Your session has expired or is no longer valid. Please log in again.'
+      : null,
+  );
 
   loginForm = this.fb.nonNullable.group({
     username: ['', Validators.required],
@@ -35,11 +36,16 @@ export default class LoginPage {
     }
 
     this.errorMessage.set(null);
+    this.infoMessage.set(null);
+    this.isLoading.set(true);
     const request: Login = this.loginForm.getRawValue();
 
     this.authService.login(request).subscribe({
       next: () => this.router.navigate(['/students']),
-      error: (err) => this.errorMessage.set(err.error?.message ?? 'Login failed'),
+      error: (err) => {
+        this.isLoading.set(false);
+        this.errorMessage.set(err.error?.message ?? 'Login failed');
+      },
     });
   }
 }
