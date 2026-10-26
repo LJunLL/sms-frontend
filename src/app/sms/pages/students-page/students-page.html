@@ -1,51 +1,75 @@
-<div>
-  <div class="flex justify-between items-center mb-4">
-    <h1 class="text-2xl font-bold">Students</h1>
+<div class="flex justify-between items-center mb-6">
+  <h1 class="text-2xl font-bold">Students</h1>
+  @if (authService.isAdmin()) {
+    <a routerLink="/students/new" class="btn btn-primary btn-sm">Add student</a>
+  }
+</div>
+
+@if (errorMessage()) {
+  <div class="alert alert-error mb-4">{{ errorMessage() }}</div>
+}
+
+@if (studentsResource.isLoading()) {
+  <div class="flex justify-center py-16">
+    <span class="loading loading-spinner loading-lg"></span>
+  </div>
+} @else if (studentsResource.error()) {
+  <div class="alert alert-error">
+    <span>Could not load students. Check your connection and try again.</span>
+    <button class="btn btn-sm" (click)="studentsResource.reload()">Retry</button>
+  </div>
+} @else if (!studentsResource.value()?.length) {
+  <div class="text-center py-16">
+    <p class="text-lg font-semibold">No students yet</p>
+    <p class="text-sm opacity-70 mt-1">Students you add will appear here.</p>
     @if (authService.isAdmin()) {
-      <a routerLink="/students/new" class="btn btn-primary btn-sm">Add student</a>
+      <a routerLink="/students/new" class="btn btn-primary btn-sm mt-4">Add the first student</a>
     }
   </div>
-  @if (errorMessage()) {
-    <div class="alert alert-error mb-4">{{ errorMessage() }}</div>
-  }
-  <div class="overflow-x-auto">
-    <table class="table table-zebra">
+} @else {
+  <div class="overflow-x-auto bg-base-100 rounded-box border border-base-300">
+    <table class="table">
       <thead>
         <tr>
-          <th>Id</th>
+          <th>Student</th>
           <th>DNI</th>
-          <th>Name</th>
-          <th>Last Name</th>
-          <th>Email</th>
           <th>Phone</th>
           <th>Birthday</th>
-          <th>Enrollment Date</th>
+          <th>Enrolled</th>
           @if (authService.isAdmin()) {
-            <th>Actions</th>
+            <th class="text-right">Actions</th>
           }
         </tr>
       </thead>
       <tbody>
-        @for (student of students(); track student.id) {
-          <tr>
-            <td>{{ student.id }}</td>
+        @for (student of studentsResource.value(); track student.id) {
+          <tr class="hover:bg-base-200">
+            <td>
+              <div class="flex items-center gap-3">
+                <div class="avatar avatar-placeholder">
+                  <div class="bg-neutral text-neutral-content w-10 rounded-full">
+                    <span class="text-sm"
+                      >{{ student.name.charAt(0) }}{{ student.lastName.charAt(0) }}</span
+                    >
+                  </div>
+                </div>
+                <div>
+                  <div class="font-semibold">{{ student.name }} {{ student.lastName }}</div>
+                  <div class="text-sm opacity-60">{{ student.email }}</div>
+                </div>
+              </div>
+            </td>
             <td>{{ student.dni }}</td>
-            <td>{{ student.name }}</td>
-            <td>{{ student.lastName }}</td>
-            <td>{{ student.email }}</td>
             <td>{{ student.phone }}</td>
             <td>{{ student.birthday | date: 'dd/MM/yyyy' }}</td>
             <td>{{ student.enrollmentDate | date: 'dd/MM/yyyy' }}</td>
             @if (authService.isAdmin()) {
               <td>
-                <div class="flex gap-2">
-                  <a
-                    [routerLink]="['/students', student.id, 'edit']"
-                    class="btn btn-sm btn-outline"
+                <div class="flex justify-end gap-2">
+                  <a [routerLink]="['/students', student.id, 'edit']" class="btn btn-sm btn-ghost"
+                    >Edit</a
                   >
-                    Edit
-                  </a>
-                  <button class="btn btn-error btn-sm btn-outline" (click)="deleteStudent(student)">
+                  <button class="btn btn-sm btn-ghost text-error" (click)="deleteStudent(student)">
                     Delete
                   </button>
                 </div>
@@ -56,4 +80,4 @@
       </tbody>
     </table>
   </div>
-</div>
+}
