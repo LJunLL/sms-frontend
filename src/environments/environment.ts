@@ -1,3 +1,3 @@
 export const environment = {
-  apiUrl: 'https://tu-backend.onrender.com/api/v1'
+  apiUrl: 'https://ljunll-sms-api.onrender.com/api/v1',
 };
