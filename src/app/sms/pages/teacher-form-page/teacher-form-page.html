@@ -1,0 +1,84 @@
+<div class="max-w-3xl">
+  <h1 class="text-2xl font-bold mb-4">{{ isEditMode ? 'Edit teacher' : 'New teacher' }}</h1>
+
+  @if (errorMessage()) {
+    <div class="alert alert-error mb-4">{{ errorMessage() }}</div>
+  }
+
+  <form [formGroup]="teacherForm" (ngSubmit)="onSubmit()" class="card bg-base-100 shadow-sm">
+    <div class="card-body">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6">
+        <fieldset class="fieldset">
+          <label class="label" for="name">Name</label>
+          <input id="name" type="text" class="input w-full" formControlName="name" />
+          @if (
+            teacherForm.controls.name.touched && teacherForm.controls.name.errors?.['required']
+          ) {
+            <p class="text-error text-sm">Name is required</p>
+          }
+        </fieldset>
+
+        <fieldset class="fieldset">
+          <label class="label" for="lastName">Last name</label>
+          <input id="lastName" type="text" class="input w-full" formControlName="lastName" />
+          @if (
+            teacherForm.controls.lastName.touched &&
+            teacherForm.controls.lastName.errors?.['required']
+          ) {
+            <p class="text-error text-sm">Last name is required</p>
+          }
+        </fieldset>
+
+        <fieldset class="fieldset">
+          <label class="label" for="email">Email</label>
+          <input id="email" type="email" class="input w-full" formControlName="email" />
+          @if (
+            teacherForm.controls.email.touched && teacherForm.controls.email.errors?.['required']
+          ) {
+            <p class="text-error text-sm">Email is required</p>
+          }
+          @if (teacherForm.controls.email.touched && teacherForm.controls.email.errors?.['email']) {
+            <p class="text-error text-sm">Invalid email format</p>
+          }
+        </fieldset>
+
+        <fieldset class="fieldset">
+          <label class="label" for="phone">Phone</label>
+          <input id="phone" type="tel" class="input w-full" formControlName="phone" />
+          @if (
+            teacherForm.controls.phone.touched && teacherForm.controls.phone.errors?.['required']
+          ) {
+            <p class="text-error text-sm">Phone is required</p>
+          }
+        </fieldset>
+
+        <fieldset class="fieldset md:col-span-2">
+          <label class="label" for="specialty">Specialty</label>
+          <input
+            id="specialty"
+            type="text"
+            class="input w-full"
+            formControlName="specialty"
+            placeholder="e.g. Programming"
+          />
+          @if (
+            teacherForm.controls.specialty.touched &&
+            teacherForm.controls.specialty.errors?.['required']
+          ) {
+            <p class="text-error text-sm">Specialty is required</p>
+          }
+        </fieldset>
+      </div>
+
+      <div class="card-actions justify-end mt-4">
+        <a routerLink="/teachers" class="btn btn-ghost">Cancel</a>
+        <button type="submit" class="btn btn-primary" [disabled]="isSaving()">
+          @if (isSaving()) {
+            <span class="loading loading-spinner loading-sm"></span>
+          }
+          Save
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

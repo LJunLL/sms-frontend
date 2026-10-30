@@ -7,7 +7,7 @@ export const routes: Routes = [
   {
     path: 'login',
     loadComponent: () => import('./auth/pages/login-page/login-page'),
-    canActivate: [guestGuard]
+    canActivate: [guestGuard],
   },
   {
     path: '',
@@ -16,20 +16,34 @@ export const routes: Routes = [
     children: [
       {
         path: 'students',
-        loadComponent: () => import('./sms/pages/students-page/students-page')
+        loadComponent: () => import('./sms/pages/students-page/students-page'),
       },
       {
         path: 'students/new',
         loadComponent: () => import('./sms/pages/student-form-page/student-form-page'),
-        canActivate: [adminGuard]
+        canActivate: [adminGuard],
       },
       {
         path: 'students/:id/edit',
         loadComponent: () => import('./sms/pages/student-form-page/student-form-page'),
-        canActivate: [adminGuard]
+        canActivate: [adminGuard],
       },
-      { path: '', redirectTo: 'students', pathMatch: 'full' }
-    ]
+      {
+        path: 'teachers',
+        loadComponent: () => import('./sms/pages/teachers-page/teachers-page'),
+      },
+      {
+        path: 'teachers/new',
+        loadComponent: () => import('./sms/pages/teacher-form-page/teacher-form-page'),
+        canActivate: [adminGuard],
+      },
+      {
+        path: 'teachers/:id/edit',
+        loadComponent: () => import('./sms/pages/teacher-form-page/teacher-form-page'),
+        canActivate: [adminGuard],
+      },
+      { path: '', redirectTo: 'students', pathMatch: 'full' },
+    ],
   },
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: '' },
 ];
