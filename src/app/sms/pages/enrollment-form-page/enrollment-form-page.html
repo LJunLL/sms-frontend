@@ -1,0 +1,75 @@
+<div class="max-w-3xl">
+  <h1 class="text-2xl font-bold mb-4">New enrollment</h1>
+
+  @if (errorMessage()) {
+    <div class="alert alert-error mb-4">{{ errorMessage() }}</div>
+  }
+
+  @if (studentsResource.isLoading() || subjectsResource.isLoading()) {
+    <div class="flex justify-center p-10">
+      <span class="loading loading-spinner loading-lg"></span>
+    </div>
+  } @else if (studentsResource.error() || subjectsResource.error()) {
+    <div class="alert alert-error">Could not load students or subjects.</div>
+  } @else {
+    <form [formGroup]="enrollmentForm" (ngSubmit)="onSubmit()" class="card bg-base-100 shadow-sm">
+      <div class="card-body">
+        <fieldset class="fieldset">
+          <label class="label" for="studentId">Student</label>
+          <select id="studentId" class="select w-full" formControlName="studentId">
+            <option [ngValue]="null" disabled>Select a student</option>
+            @for (student of studentsResource.value(); track student.id) {
+              <option [ngValue]="student.id">{{ student.name }} {{ student.lastName }}</option>
+            }
+          </select>
+          @if (
+            enrollmentForm.controls.studentId.touched && enrollmentForm.controls.studentId.invalid
+          ) {
+            <p class="text-error text-sm">Student is required</p>
+          }
+        </fieldset>
+
+        <fieldset class="fieldset">
+          <label class="label" for="subjectId">Subject</label>
+          <select id="subjectId" class="select w-full" formControlName="subjectId">
+            <option [ngValue]="null" disabled>Select a subject</option>
+            @for (subject of subjectsResource.value(); track subject.id) {
+              <option [ngValue]="subject.id">{{ subject.name }} ({{ subject.courseName }})</option>
+            }
+          </select>
+          @if (
+            enrollmentForm.controls.subjectId.touched && enrollmentForm.controls.subjectId.invalid
+          ) {
+            <p class="text-error text-sm">Subject is required</p>
+          }
+        </fieldset>
+
+        <fieldset class="fieldset">
+          <label class="label" for="enrollmentDate">Enrollment date</label>
+          <input
+            id="enrollmentDate"
+            type="date"
+            class="input w-full"
+            formControlName="enrollmentDate"
+          />
+          @if (
+            enrollmentForm.controls.enrollmentDate.touched &&
+            enrollmentForm.controls.enrollmentDate.invalid
+          ) {
+            <p class="text-error text-sm">Date is required</p>
+          }
+        </fieldset>
+
+        <div class="flex justify-end gap-2 mt-4">
+          <a routerLink="/enrollments" class="btn btn-ghost">Cancel</a>
+          <button type="submit" class="btn btn-primary" [disabled]="isSaving()">
+            @if (isSaving()) {
+              <span class="loading loading-spinner loading-sm"></span>
+            }
+            Create
+          </button>
+        </div>
+      </div>
+    </form>
+  }
+</div>

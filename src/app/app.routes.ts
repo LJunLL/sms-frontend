@@ -46,6 +46,11 @@ export const routes: Routes = [
         path: 'enrollments',
         loadComponent: () => import('./sms/pages/enrollments-page/enrollments-page'),
       },
+      {
+        path: 'enrollments/new',
+        loadComponent: () => import('./sms/pages/enrollment-form-page/enrollment-form-page'),
+        canActivate: [adminGuard],
+      },
       { path: '', redirectTo: 'students', pathMatch: 'full' },
     ],
   },
