@@ -42,6 +42,10 @@ export const routes: Routes = [
         loadComponent: () => import('./sms/pages/teacher-form-page/teacher-form-page'),
         canActivate: [adminGuard],
       },
+      {
+        path: 'enrollments',
+        loadComponent: () => import('./sms/pages/enrollments-page/enrollments-page'),
+      },
       { path: '', redirectTo: 'students', pathMatch: 'full' },
     ],
   },

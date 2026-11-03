@@ -1,0 +1,80 @@
+<div class="space-y-6">
+  <!-- Header -->
+  <div class="flex items-center justify-between">
+    <div>
+      <h1 class="text-2xl font-bold">Enrollments</h1>
+      <p class="text-base-content/60 text-sm">
+        Students enrolled in each subject, with grades and status
+      </p>
+    </div>
+    @if (authService.isAdmin()) {
+      <a routerLink="/enrollments/new" class="btn btn-primary">+ New enrollment</a>
+    }
+  </div>
+
+  <!-- Error (e.g. enrollment with grade) -->
+  @if (errorMessage()) {
+    <div role="alert" class="alert alert-error alert-soft">
+      <span>{{ errorMessage() }}</span>
+      <button class="btn btn-sm btn-ghost" (click)="errorMessage.set(null)">✕</button>
+    </div>
+  }
+
+  <div class="card bg-base-100 shadow-sm">
+    <div class="card-body p-0">
+      @if (enrollmentsResource.isLoading()) {
+        <div class="flex justify-center p-10">
+          <span class="loading loading-spinner loading-lg"></span>
+        </div>
+      } @else if (enrollmentsResource.error()) {
+        <div class="p-10 text-center text-error">Could not load enrollments.</div>
+      } @else if (enrollmentsResource.value()?.length === 0) {
+        <div class="p-10 text-center text-base-content/60">No enrollments yet.</div>
+      } @else {
+        <div class="overflow-x-auto">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Student</th>
+                <th>Subject</th>
+                <th>Date</th>
+                <th class="text-center">Grade</th>
+                <th>Status</th>
+                @if (authService.isAdmin()) {
+                  <th class="text-right">Actions</th>
+                }
+              </tr>
+            </thead>
+            <tbody>
+              @for (enrollment of enrollmentsResource.value(); track enrollment.id) {
+                <tr class="hover">
+                  <td class="font-medium">{{ enrollment.studentName }}</td>
+                  <td>{{ enrollment.subjectName }}</td>
+                  <td class="text-base-content/70">{{ enrollment.enrollmentDate }}</td>
+                  <td class="text-center font-mono">
+                    {{ enrollment.grade !== null ? enrollment.grade.toFixed(1) : '—' }}
+                  </td>
+                  <td>
+                    <span class="badge badge-sm" [class]="statusBadgeClass(enrollment.status)">
+                      {{ enrollment.status }}
+                    </span>
+                  </td>
+                  @if (authService.isAdmin()) {
+                    <td class="text-right">
+                      <button
+                        class="btn btn-sm btn-ghost text-error"
+                        (click)="deleteEnrollment(enrollment)"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  }
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    </div>
+  </div>
+</div>
