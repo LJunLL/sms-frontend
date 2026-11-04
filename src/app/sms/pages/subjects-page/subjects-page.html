@@ -1,0 +1,72 @@
+<div class="flex justify-between items-center mb-6">
+  <h1 class="text-2xl font-bold">Subjects</h1>
+  @if (authService.isAdmin()) {
+    <a routerLink="/subjects/new" class="btn btn-primary btn-sm">Add subject</a>
+  }
+</div>
+
+@if (errorMessage()) {
+  <div class="alert alert-error mb-4">{{ errorMessage() }}</div>
+}
+
+@if (subjectsResource.isLoading()) {
+  <div class="flex justify-center py-16">
+    <span class="loading loading-spinner loading-lg"></span>
+  </div>
+} @else if (subjectsResource.error()) {
+  <div class="alert alert-error">
+    <span>Could not load subjects. Check your connection and try again.</span>
+    <button class="btn btn-sm" (click)="subjectsResource.reload()">Retry</button>
+  </div>
+} @else if (!subjectsResource.value()?.length) {
+  <div class="text-center py-16">
+    <p class="text-lg font-semibold">No subjects yet</p>
+    <p class="text-sm opacity-70 mt-1">Subjects you add will appear here.</p>
+    @if (authService.isAdmin()) {
+      <a routerLink="/subjects/new" class="btn btn-primary btn-sm mt-4">Add the first subject</a>
+    }
+  </div>
+} @else {
+  <div class="overflow-x-auto bg-base-100 rounded-box border border-base-300">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Subject</th>
+          <th>Course</th>
+          <th>Teacher</th>
+          <th class="text-center">Hours/week</th>
+          @if (authService.isAdmin()) {
+            <th class="text-right">Actions</th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (subject of subjectsResource.value(); track subject.id) {
+          <tr class="hover:bg-base-200">
+            <td>
+              <div class="font-semibold">{{ subject.name }}</div>
+              <div class="text-sm opacity-60">{{ subject.description }}</div>
+            </td>
+            <td>
+              <span class="badge badge-ghost">{{ subject.courseName }}</span>
+            </td>
+            <td>{{ subject.teacherName }}</td>
+            <td class="text-center font-mono">{{ subject.weeklyHours }}</td>
+            @if (authService.isAdmin()) {
+              <td>
+                <div class="flex justify-end gap-2">
+                  <a [routerLink]="['/subjects', subject.id, 'edit']" class="btn btn-sm btn-ghost"
+                    >Edit</a
+                  >
+                  <button class="btn btn-sm btn-ghost text-error" (click)="deleteSubject(subject)">
+                    Delete
+                  </button>
+                </div>
+              </td>
+            }
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}

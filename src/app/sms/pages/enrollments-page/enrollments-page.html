@@ -3,12 +3,9 @@
   <div class="flex items-center justify-between">
     <div>
       <h1 class="text-2xl font-bold">Enrollments</h1>
-      <p class="text-base-content/60 text-sm">
-        Students enrolled in each subject, with grades and status
-      </p>
     </div>
     @if (authService.isAdmin()) {
-      <a routerLink="/enrollments/new" class="btn btn-primary">+ New enrollment</a>
+      <a routerLink="/enrollments/new" class="btn btn-primary btn-sm">Add enrollment</a>
     }
   </div>
 

@@ -10,4 +10,8 @@ export class SubjectService {
   getSubjects() {
     return this.http.get<Subject[]>(`${environment.apiUrl}/subjects`);
   }
+
+  deleteSubject(id: number) {
+    return this.http.delete<void>(`${environment.apiUrl}/subjects/${id}`);
+  }
 }
