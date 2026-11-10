@@ -1,0 +1,68 @@
+<div class="max-w-3xl">
+  <h1 class="text-2xl font-bold mb-4">{{ isEditMode ? 'Edit course' : 'New course' }}</h1>
+
+  @if (errorMessage()) {
+    <div class="alert alert-error mb-4">{{ errorMessage() }}</div>
+  }
+
+  <form [formGroup]="courseForm" (ngSubmit)="onSubmit()" class="card bg-base-100 shadow-sm">
+    <div class="card-body">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6">
+        <fieldset class="fieldset md:col-span-2">
+          <label class="label" for="name">Name</label>
+          <input id="name" type="text" class="input w-full" formControlName="name" />
+          @if (courseForm.controls.name.touched && courseForm.controls.name.invalid) {
+            <p class="text-error text-sm">Name is required</p>
+          }
+        </fieldset>
+
+        <fieldset class="fieldset md:col-span-2">
+          <label class="label" for="description">Description</label>
+          <textarea
+            id="description"
+            rows="3"
+            class="textarea w-full"
+            formControlName="description"
+          ></textarea>
+          @if (courseForm.controls.description.touched && courseForm.controls.description.invalid) {
+            <p class="text-error text-sm">Description is required</p>
+          }
+        </fieldset>
+
+        <fieldset class="fieldset">
+          <label class="label" for="level">Level</label>
+          <input id="level" type="number" min="1" class="input w-full" formControlName="level" />
+          @if (courseForm.controls.level.touched && courseForm.controls.level.invalid) {
+            <p class="text-error text-sm">Level must be at least 1</p>
+          }
+        </fieldset>
+
+        <fieldset class="fieldset">
+          <label class="label" for="durationHours">Duration (hours)</label>
+          <input
+            id="durationHours"
+            type="number"
+            min="1"
+            class="input w-full"
+            formControlName="durationHours"
+          />
+          @if (
+            courseForm.controls.durationHours.touched && courseForm.controls.durationHours.invalid
+          ) {
+            <p class="text-error text-sm">Duration must be at least 1 hour</p>
+          }
+        </fieldset>
+      </div>
+
+      <div class="flex justify-end gap-2 mt-4">
+        <a routerLink="/courses" class="btn btn-ghost">Cancel</a>
+        <button type="submit" class="btn btn-primary" [disabled]="isSaving()">
+          @if (isSaving()) {
+            <span class="loading loading-spinner loading-sm"></span>
+          }
+          {{ isEditMode ? 'Save' : 'Create' }}
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
