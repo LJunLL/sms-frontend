@@ -1,0 +1,98 @@
+<div class="max-w-3xl">
+  <h1 class="text-2xl font-bold mb-4">{{ isEditMode ? 'Edit subject' : 'New subject' }}</h1>
+
+  @if (errorMessage()) {
+    <div class="alert alert-error mb-4">{{ errorMessage() }}</div>
+  }
+
+  @if (teachersResource.isLoading() || coursesResource.isLoading()) {
+    <div class="flex justify-center p-10">
+      <span class="loading loading-spinner loading-lg"></span>
+    </div>
+  } @else if (teachersResource.error() || coursesResource.error()) {
+    <div class="alert alert-error">Could not load teachers or courses.</div>
+  } @else {
+    <form [formGroup]="subjectForm" (ngSubmit)="onSubmit()" class="card bg-base-100 shadow-sm">
+      <div class="card-body">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6">
+          <fieldset class="fieldset md:col-span-2">
+            <label class="label" for="name">Name</label>
+            <input id="name" type="text" class="input w-full" formControlName="name" />
+            @if (subjectForm.controls.name.touched && subjectForm.controls.name.invalid) {
+              <p class="text-error text-sm">Name is required</p>
+            }
+          </fieldset>
+
+          <fieldset class="fieldset md:col-span-2">
+            <label class="label" for="description">Description</label>
+            <textarea
+              id="description"
+              rows="3"
+              class="textarea w-full"
+              formControlName="description"
+            ></textarea>
+            @if (
+              subjectForm.controls.description.touched && subjectForm.controls.description.invalid
+            ) {
+              <p class="text-error text-sm">Description is required</p>
+            }
+          </fieldset>
+
+          <fieldset class="fieldset">
+            <label class="label" for="teacherId">Teacher</label>
+            <select id="teacherId" class="select w-full" formControlName="teacherId">
+              <option [ngValue]="null" disabled>Select a teacher</option>
+              @for (teacher of teachersResource.value(); track teacher.id) {
+                <option [ngValue]="teacher.id">
+                  {{ teacher.name }} {{ teacher.lastName }} ({{ teacher.specialty }})
+                </option>
+              }
+            </select>
+            @if (subjectForm.controls.teacherId.touched && subjectForm.controls.teacherId.invalid) {
+              <p class="text-error text-sm">Teacher is required</p>
+            }
+          </fieldset>
+
+          <fieldset class="fieldset">
+            <label class="label" for="courseId">Course</label>
+            <select id="courseId" class="select w-full" formControlName="courseId">
+              <option [ngValue]="null" disabled>Select a course</option>
+              @for (course of coursesResource.value(); track course.id) {
+                <option [ngValue]="course.id">{{ course.name }}</option>
+              }
+            </select>
+            @if (subjectForm.controls.courseId.touched && subjectForm.controls.courseId.invalid) {
+              <p class="text-error text-sm">Course is required</p>
+            }
+          </fieldset>
+
+          <fieldset class="fieldset">
+            <label class="label" for="weeklyHours">Hours per week</label>
+            <input
+              id="weeklyHours"
+              type="number"
+              min="1"
+              class="input w-full"
+              formControlName="weeklyHours"
+            />
+            @if (
+              subjectForm.controls.weeklyHours.touched && subjectForm.controls.weeklyHours.invalid
+            ) {
+              <p class="text-error text-sm">Enter at least 1 hour</p>
+            }
+          </fieldset>
+        </div>
+
+        <div class="flex justify-end gap-2 mt-4">
+          <a routerLink="/subjects" class="btn btn-ghost">Cancel</a>
+          <button type="submit" class="btn btn-primary" [disabled]="isSaving()">
+            @if (isSaving()) {
+              <span class="loading loading-spinner loading-sm"></span>
+            }
+            {{ isEditMode ? 'Save' : 'Create' }}
+          </button>
+        </div>
+      </div>
+    </form>
+  }
+</div>

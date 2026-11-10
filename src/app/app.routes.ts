@@ -55,6 +55,16 @@ export const routes: Routes = [
         path: 'subjects',
         loadComponent: () => import('./sms/pages/subjects-page/subjects-page'),
       },
+      {
+        path: 'subjects/new',
+        loadComponent: () => import('./sms/pages/subject-form-page/subject-form-page'),
+        canActivate: [adminGuard],
+      },
+      {
+        path: 'subjects/:id/edit',
+        loadComponent: () => import('./sms/pages/subject-form-page/subject-form-page'),
+        canActivate: [adminGuard],
+      },
       { path: '', redirectTo: 'students', pathMatch: 'full' },
     ],
   },
