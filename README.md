@@ -16,8 +16,10 @@ Angular frontend for the [Student Management System API](https://github.com/LJun
 ## Screenshots
 
 ![Login page](docs/login.png)
-![Students list](docs/students.png)
-![Student form](docs/student-form.png)
+![General](docs/general.png)
+![Enrollments](docs/enrollments.png)
+![Grade](docs/enrollments_grade.png)
+![Subject](docs/subject-form.png)
 
 ## Features
 
@@ -25,7 +27,10 @@ Angular frontend for the [Student Management System API](https://github.com/LJun
 - **Session handling**: expired or invalid tokens are detected and the user is redirected to the login page with an explanatory message.
 - **Route protection** with functional guards: authenticated routes, guest-only login page and admin-only pages.
 - **Role-based UI**: create, edit and delete actions are only shown to administrators.
-- **Students management**: full CRUD with reactive forms, client-side validation matching the API rules, and error messages from the backend.
+- **Full CRUD for students, teachers, courses and subjects** with reactive forms, client-side validation matching the API rules, and error messages from the backend.
+- **Subject form with related data**: teacher and course are chosen from dropdowns loaded from the API, and pre-selected when editing.
+- **Enrollments**: enroll a student in a subject, assign grades from a modal (0–10, one decimal), and see the resulting status (`ENROLLED`, `APPROVED`, `SUSPENDED`) update instantly.
+- **Business rules from the API surfaced in the UI**, such as not deleting a course that has subjects or an enrollment that already has a grade.
 - **Loading, error and empty states** for data fetched with `rxResource`.
 - **Responsive layout** with a sidebar that turns into a drawer menu on mobile.
 
@@ -39,12 +44,11 @@ Angular frontend for the [Student Management System API](https://github.com/LJun
 
 ## Project Structure
 
-```
+````
 src/app/
 ├── auth/          # Login page, AuthService, guards and JWT interceptor
 ├── shared/        # Navbar and sidebar
-└── sms/           # Main layout and the management pages (students...)
-```
+└── sms/           # Main layout, services, interfaces and pages for students, teachers, courses, subjects and enrollments
 
 ## Getting Started
 
@@ -60,7 +64,7 @@ git clone https://github.com/LJunLL/sms-frontend.git
 cd sms-frontend
 npm install
 ng serve
-```
+````
 
 Open http://localhost:4200. With the backend in development mode, you can log in with `admin` / `admin123` or `user` / `password123`.
 
