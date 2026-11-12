@@ -47,7 +47,9 @@
                 <tr class="hover">
                   <td class="font-medium">{{ enrollment.studentName }}</td>
                   <td>{{ enrollment.subjectName }}</td>
-                  <td class="text-base-content/70">{{ enrollment.enrollmentDate }}</td>
+                  <td class="text-base-content/70">
+                    {{ enrollment.enrollmentDate | date: 'dd/MM/yyyy' }}
+                  </td>
                   <td class="text-center font-mono">
                     {{ enrollment.grade !== null ? enrollment.grade.toFixed(1) : '—' }}
                   </td>

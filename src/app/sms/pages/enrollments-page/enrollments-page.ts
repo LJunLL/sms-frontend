@@ -5,10 +5,11 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { Enrollment, EnrollmentStatus } from '../../interfaces/enrollment.interface';
 import { RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-enrollments-page',
-  imports: [RouterLink, ReactiveFormsModule],
+  imports: [RouterLink, ReactiveFormsModule, DatePipe],
   templateUrl: './enrollments-page.html',
 })
 export default class EnrollmentsPage {
