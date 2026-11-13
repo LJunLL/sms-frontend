@@ -44,11 +44,12 @@ Angular frontend for the [Student Management System API](https://github.com/LJun
 
 ## Project Structure
 
-````
+```
 src/app/
 ├── auth/          # Login page, AuthService, guards and JWT interceptor
 ├── shared/        # Navbar and sidebar
 └── sms/           # Main layout, services, interfaces and pages for students, teachers, courses, subjects and enrollments
+```
 
 ## Getting Started
 
@@ -64,7 +65,7 @@ git clone https://github.com/LJunLL/sms-frontend.git
 cd sms-frontend
 npm install
 ng serve
-````
+```
 
 Open http://localhost:4200. With the backend in development mode, you can log in with `admin` / `admin123` or `user` / `password123`.
 
